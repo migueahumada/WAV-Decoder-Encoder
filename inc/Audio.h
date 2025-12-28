@@ -185,9 +185,6 @@ class Audio
   void biquad(FilterType::E type,float cutoff, float Q);
   void butterworth(FilterType::E type, float cutoff);
 
-
-  void digitalIntegrator();
-
 private:
 
   /*

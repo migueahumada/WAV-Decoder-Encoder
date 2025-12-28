@@ -428,37 +428,6 @@ void Audio::butterworth(FilterType::E type, float cutoff)
   }
 }
 
-void Audio::digitalIntegrator()
-{
-
-/*
-*   y[n] = x[n] + x[n-1] - y[n] * k  
-*/
-  float x1 = 0.0f;
-  float y1 = 0.0f;
-  float freq = 200.0f;
-
-  const float w0 = 2.0f * PI * freq / m_sampleRate;
-  float k = 1.0f - std::expf(-w0);
-
-  for (int frame = 0; frame < getTotalNumFrames(); ++frame)
-  {
-    for (int channel = 0; channel < getNumChannels(); ++channel)
-    {
-      
-      float x = getFrameSample(channel,frame);
-      
-      float y = x + x1 - (y1 * k);
-      
-      x1 = x;
-      y1 = y;
-
-      setFrameSample(channel, frame, clamp(y, -1.0f, 1.0f));
-    }
-  }
-}
-
-
 
 void Audio::readRiffChunk(std::fstream& file,
                           WAVE_HEADER& waveHeader)
